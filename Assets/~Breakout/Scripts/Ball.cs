@@ -10,11 +10,15 @@ namespace Breakout
         public float speed = 5f; // Speed that the ball travels
 
         private Vector3 velocity; // Velocity of the ball (Direction X Speed)
-        
+
+        // public Text countText;
+        // private int count;
+
         // Use this for initialization
         void Start()
         {
-
+            // count = 0;
+            // SetCountText();
         }
 
         // Update is called once per frame
@@ -44,7 +48,22 @@ namespace Breakout
             velocity = reflect.normalized * velocity.magnitude;
         }
 
-        
+        // Homework 2 & 4: Destroying blocks when colliding, Recording a score
+        /* void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Block"))
+            {
+                other.gameObject.SetActive(false);
+                count = count + 1;
+                SetCountText ();
+            }
+        }
+
+        void SetCountText ()
+        {
+            countText.text = "Count: " + count.ToString ();
+            
+        } */
 
     }
 }
