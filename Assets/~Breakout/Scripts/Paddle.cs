@@ -10,6 +10,7 @@ namespace Breakout
 
         public float movementSpeed = 20f;
         public Ball currentBall;
+        private bool launch;
 
         // Directions array defaults to two values
         public Vector2[] directions = new Vector2[]
@@ -18,6 +19,11 @@ namespace Breakout
             new Vector2(0.5f, 0.5f)
         };
         
+        void Start()
+        {
+            launch = false;
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -39,10 +45,13 @@ namespace Breakout
 
         void CheckInput()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && (launch == false))
             {
                 Fire();
+                launch = true;
+                
             }
+            
         }
 
         void Movement()
