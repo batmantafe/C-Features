@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Breakout
 {
@@ -11,14 +12,14 @@ namespace Breakout
 
         private Vector3 velocity; // Velocity of the ball (Direction X Speed)
 
-        // public Text countText;
-        // private int count;
+        public Text countText;
+        private int count;
 
         // Use this for initialization
         void Start()
         {
-            // count = 0;
-            // SetCountText();
+            count = 0;
+            SetCountText();
         }
 
         // Update is called once per frame
@@ -46,24 +47,32 @@ namespace Breakout
 
             // Calculate new velocity from reflection multiply by the same speed (velocity.magnitude)
             velocity = reflect.normalized * velocity.magnitude;
+
+            if (other.gameObject.CompareTag("Block"))
+            {
+                count = count + 1; // to increase Count by 1 when each Pickup is collided with and deactivated
+                SetCountText(); // countText.text = "Count: " + count.ToString(); // update Text property every time we Pickup
+            }
         }
 
         // Homework 2 & 4: Destroying blocks when colliding, Recording a score
-        /* void OnTriggerEnter(Collider other)
+        /*void OnCollision2DEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Block"))
             {
-                other.gameObject.SetActive(false);
+                
                 count = count + 1;
                 SetCountText ();
             }
-        }
+        }*/
+        
 
         void SetCountText ()
         {
             countText.text = "Count: " + count.ToString ();
             
-        } */
-
+        }
+        
+        
     }
 }
