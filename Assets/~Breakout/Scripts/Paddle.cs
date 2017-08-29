@@ -18,13 +18,6 @@ namespace Breakout
             new Vector2(0.5f, 0.5f)
         };
         
-        // Use this for initialization
-        void Start()
-        {
-            // Grabs currentBall from children of the Paddle
-            currentBall = GetComponent<Ball>();
-        }
-
         // Update is called once per frame
         void Update()
         {
