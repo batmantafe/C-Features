@@ -9,8 +9,7 @@ namespace Billiards
     public class Ball : MonoBehaviour
     {
 
-        public Text countText;
-        private int count;
+        
 
         public float stopSpeed = 0.2f;
 
@@ -21,8 +20,7 @@ namespace Billiards
         {
             rigid = GetComponent<Rigidbody>();
 
-            count = 0;
-            SetCountText();
+            
         }
 
         // Anything Physics related should be done in FixedUpdate
@@ -55,14 +53,14 @@ namespace Billiards
             rigid.AddForce(dir * impactForce, ForceMode.Impulse);
         }
 
-        void OnTriggerEnter(Collider other)
+        void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag("Pocket"))
             {
                 Destroy(gameObject);
 
-                count = count + 1;
-                SetCountText(); // don't forget to attach the Canvas to this
+                // count = count + 1;
+                // SetCountText(); // don't forget to attach the Canvas to this
 
                 // count = count + 1; // to increase Count by 1 when each Pickup is collided with and deactivated
                 // SetCountText(); // countText.text = "Count: " + count.ToString(); // update Text property every time we Pickup
@@ -70,11 +68,7 @@ namespace Billiards
 
         }
 
-        void SetCountText()
-        {
-            countText.text = "Count: " + count.ToString();
-
-        }
+        
 
     }
 }
