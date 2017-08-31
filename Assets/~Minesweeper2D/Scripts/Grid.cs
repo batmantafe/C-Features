@@ -60,6 +60,28 @@ namespace Minesweeper2D
             }
         }
 
+        // Count adjacent mines at element
+        /*public int GetAdjacentMineCountAt(Tile t)
+        {
+            int count = 0;
+
+            // Loop through all elements and have each axis go between -1 to 1
+            for (int x = -1; x <= 1; x++)
+            {
+                // Calculate desired coordinates from ones attained
+                int desiredX = t.x + x;
+
+                // IF desiredX is within range of tiles array length
+
+
+                    // IF the element at index is a mine
+
+
+                        // increment count by 1
+
+            }
+        }*/
+
         // Use this for initialization
         void Start()
         {

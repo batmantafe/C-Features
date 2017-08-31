@@ -14,11 +14,14 @@ namespace Minesweeper2D
         public bool isMine = false; // is the current tile a mine?
         public bool isRevealed = false; // has the tile already been revealed?
 
+        
         [Header("References")]
         public Sprite[] emptySprites; // list of empty sprites i.e. empty, 1, 2, 3, 4, etc...
         public Sprite[] mineSprites; // the mine sprites
 
         private SpriteRenderer rend; // reference to sprite renderer
+
+        private Ray mouseRay; // the Ray of the Mouse for CheckForMine below
 
         // Use this for initialization
         void Awake()
@@ -50,11 +53,34 @@ namespace Minesweeper2D
                 rend.sprite = emptySprites[adjacentMines];
             }
         }
+        
+        void CheckForMine()
+        {
+            // When MouseDown
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Calculate the Mouse Ray before performing Raycast
+                mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                // raycast Hit container for the hit information
+                RaycastHit hit;
+                
+                // if Tile is clicked
+                if (Physics.Raycast(mouseRay, out hit))
+                {
+                    Reveal();
+                }
+
+            }
+            
+        }
+
+        
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
-
+            CheckForMine();
         }
     }
 }
