@@ -13,6 +13,10 @@ namespace Minesweeper2D
         public int height = 10;
         public float spacing = .155f;
 
+
+        public float offsetPos = .5f;
+
+
         public Tile[,] tiles;
 
         // Functionality for spawning tiles
@@ -25,6 +29,7 @@ namespace Minesweeper2D
             return currentTile; // return it
         }
 
+        
         void GenerateTiles()
         {
             // create new 2D array of size width x height
@@ -35,11 +40,12 @@ namespace Minesweeper2D
             {
                 for (int y = 0; y < height; y++)
                 {
+
                     // store half size for later use
                     Vector2 halfSize = new Vector2(width / 2, height / 2);
 
                     // pivot tiles around Grid
-                    Vector2 pos = new Vector2(x - halfSize.x, y - halfSize.y);
+                    Vector2 pos = new Vector2(x - (halfSize.x - offsetPos), y - (halfSize.y - offsetPos)); // HOMEWORK, 1: Center the Spawn Point: created Offset variable at .5f to adjust creation Pos of Grid
 
                     // apply spacing
                     pos *= spacing;
@@ -57,34 +63,46 @@ namespace Minesweeper2D
                     // store tile in array at those coordinates
                     tiles[x, y] = tile;
                 }
+
             }
         }
 
+
+        // HOMEWORK, 2: Detecting Adjacent Mines
         // Count adjacent mines at element
-        /*public int GetAdjacentMineCountAt(Tile t)
+        public int GetAdjacentMineCountAt(Tile t)
         {
             int count = 0;
 
             // Loop through all elements and have each axis go between -1 to 1
             for (int x = -1; x <= 1; x++)
             {
-                // Calculate desired coordinates from ones attained
-                int desiredX = t.x + x;
+                for (int y = -1; y <= 1; y++)
+                {
+                    // Calculate Desired coordinates from ones attained
+                    int desiredX = t.x + x;
+                    int desiredY = t.y + y;
 
-                // IF desiredX is within range of tiles array length
+                    // IF desiredX is within range of tiles array length
+                    if (desiredX)
+                    {
+                        // IF the element at index is a mine
+                        if (t =)
+                        {
+                            // increment count by 1
+                            count = count + 1; // mine
+                        }
+                    }
 
-
-                    // IF the element at index is a mine
-
-
-                        // increment count by 1
-
+                }
             }
-        }*/
+            return count;
+        }
 
         // Use this for initialization
         void Start()
         {
+
             GenerateTiles();
         }
 

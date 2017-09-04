@@ -53,7 +53,9 @@ namespace Minesweeper2D
                 rend.sprite = emptySprites[adjacentMines];
             }
         }
+
         
+        // HOMEWORK, 3: Deactivating a Tile on MouseDown
         void CheckForMine()
         {
             // When MouseDown
@@ -68,6 +70,7 @@ namespace Minesweeper2D
                 // if Tile is clicked
                 if (Physics.Raycast(mouseRay, out hit))
                 {
+                    gameObject.SetActive(false);
                     Reveal();
                 }
 
@@ -75,7 +78,7 @@ namespace Minesweeper2D
             
         }
 
-        
+
 
         // Update is called once per frame
         void FixedUpdate()
