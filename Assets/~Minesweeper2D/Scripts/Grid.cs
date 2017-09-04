@@ -80,14 +80,14 @@ namespace Minesweeper2D
                 for (int y = -1; y <= 1; y++)
                 {
                     // Calculate Desired coordinates from ones attained
-                    int desiredX = t.x + x;
+                    int desiredX = t.x + x; //  number of X values within GenerateTiles, limited by range x and y above (getting tiles 1 step away from this tile)
                     int desiredY = t.y + y;
 
                     // IF desiredX is within range of tiles array length
-                    if (desiredX)
+                    if (desiredX < width && desiredY < height)
                     {
                         // IF the element at index is a mine
-                        if (t =)
+                        if (tiles[x,y].isMine)
                         {
                             // increment count by 1
                             count = count + 1; // mine
