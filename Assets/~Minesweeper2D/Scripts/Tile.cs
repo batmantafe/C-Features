@@ -62,13 +62,16 @@ namespace Minesweeper2D
             if (Input.GetMouseButtonDown(0))
             {
                 // Calculate the Mouse Ray before performing Raycast
-                mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                // mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                mouseRay = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
                 // raycast Hit container for the hit information
-                RaycastHit hit;
-                
+                // RaycastHit hit;
+                RaycastHit2D hit;
+
                 // if Tile is clicked
-                if (Physics.Raycast(mouseRay, out hit))
+                // if (Physics.Raycast(mouseRay, out hit))
+                if (Physics2D.Raycast(mouseRay, out hit))
                 {
                     gameObject.SetActive(false);
                     Reveal();
