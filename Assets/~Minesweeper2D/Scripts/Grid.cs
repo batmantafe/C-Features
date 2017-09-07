@@ -19,6 +19,8 @@ namespace Minesweeper2D
 
         public Tile[,] tiles;
 
+        // private Ray mouseRay; // the Ray of the Mouse for CheckForMine below
+
         // Functionality for spawning tiles
         Tile SpawnTile(Vector3 pos)
         {
@@ -29,7 +31,7 @@ namespace Minesweeper2D
             return currentTile; // return it
         }
 
-        
+
         void GenerateTiles()
         {
             // create new 2D array of size width x height
@@ -84,13 +86,18 @@ namespace Minesweeper2D
                     int desiredY = t.y + y;
 
                     // IF desiredX is within range of tiles array length
-                    if (desiredX < width && desiredY < height)
+                    if (desiredX >= 0 && desiredY >= 0 && desiredX < width && desiredY < height)
                     {
+                        // calculate adjacent mines using
+                        // desiredX + currentX (b.x) + x index(x); // <= ??
+
+                        Tile tile = tiles[desiredX, desiredY];
+
                         // IF the element at index is a mine
-                        if (tiles[x,y].isMine)
+                        if (tile.isMine)
                         {
                             // increment count by 1
-                            count = count + 1; // mine
+                            count++; // mine
                         }
                     }
 
@@ -98,6 +105,13 @@ namespace Minesweeper2D
             }
             return count;
         }
+
+        // HOMEWORK, 3: Deactivating a Tile on MouseDown
+        /*void CheckForMine()
+        {
+           
+
+        }*/
 
         // Use this for initialization
         void Start()
@@ -107,9 +121,37 @@ namespace Minesweeper2D
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
+            // When MouseDown
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Calculate the Mouse Ray before performing Raycast
+                Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+                // raycast Hit container for the hit information
+                RaycastHit2D hit = Physics2D.Raycast(mouseRay.origin, mouseRay.direction);
+
+                // if Tile is clicked
+
+                if (hit.collider != null)
+                {
+                    // LET tile = hit collider's Tile component
+                    Tile t = hit.collider.GetComponent<Tile>();
+
+                    // IF tile != null
+                    if (t != null)
+                    {
+                        // LET adjacentMines = GetAdjacentMinesAt(tile)
+                        int adjacentMines = GetAdjacentMineCountAt(t);
+
+                        // CALL tile.Reveal(adjacentMines)
+                        t.Reveal(adjacentMines);
+                    }
+
+                }
+
+            }
         }
     }
 }
