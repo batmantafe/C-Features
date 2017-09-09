@@ -32,7 +32,7 @@ namespace TowerDefense
             Vector3 barrelPos = barrel.transform.position;
 
             // LET barrelRot = barrel's rotation
-            Vector3 barrelRot = barrel.transform.eulerAngles;
+            Quaternion barrelRot = barrel.transform.rotation;
 
             // LET fireDirection = targetPos - barrelPos
             Vector3 fireDirection = targetPos - barrelPos;
