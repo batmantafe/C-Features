@@ -30,7 +30,7 @@ namespace TowerDefense
             if (attackTimer >= attackRate)
             {
                 // CALL Attack()
-                Attack();
+                // Attack();
 
                 // SET attackTimer = 0
                 attackTimer = 0;
@@ -64,7 +64,7 @@ namespace TowerDefense
             }
         }
 
-        Enemy GetClosestEnemy()
+        /*Enemy GetClosestEnemy()
         {
             // LET closest = null
             Enemy closest = null;
@@ -102,7 +102,7 @@ namespace TowerDefense
                 // CALL cannon.Fire() and pass closest as argument
                 cannon.Fire(closest);
             }
-        }
+        }*/
 
     }
 }
