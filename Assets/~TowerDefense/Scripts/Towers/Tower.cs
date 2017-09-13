@@ -64,7 +64,7 @@ namespace TowerDefense
             }
         }
 
-        /*Enemy GetClosestEnemy()
+        Enemy GetClosestEnemy()
         {
             // LET closest = null
             Enemy closest = null;
@@ -74,9 +74,9 @@ namespace TowerDefense
 
             // FOREACH enemy in enemies list
             for (int i = 0; i <= enemies.Count; i++)
-
+            {
                 // LET distance = the distance between transform's position and enemy's position
-                distance = transform.position - e.transform.position;
+                float distance = transform.position - closest.transform.position; // ?? float = Vector3 ??
 
                 // IF distance < minDistance
                 if (distance < minDistance)
@@ -85,7 +85,8 @@ namespace TowerDefense
                     minDistance = distance;
 
                     // SET closest = enemy
-                    closest = Enemy.e;
+                    closest = enemies[i]; // this Iteration of the Enemy in the List!!!!
+                }
             }
             // RETURN closest
             return closest;
@@ -94,7 +95,7 @@ namespace TowerDefense
         void Attack()
         {
             // LET closest to GetClosestEnemy()
-            closest = GetClosestEnemy();
+            Enemy closest = GetClosestEnemy();
 
             // IF closest != null
             if (closest != null)
@@ -102,7 +103,7 @@ namespace TowerDefense
                 // CALL cannon.Fire() and pass closest as argument
                 cannon.Fire(closest);
             }
-        }*/
+        }
 
     }
 }
