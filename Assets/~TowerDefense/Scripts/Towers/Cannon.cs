@@ -9,20 +9,7 @@ namespace TowerDefense
     {
         public Transform barrel; // Reference to barrel where bullet will be shot from
         public GameObject projectilePrefab; // Prefab of projectile to instantiate when firing
-
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
+        
         public void Fire(Enemy targetEnemy)
         {
             // LET targetPos = targetEnemy's position

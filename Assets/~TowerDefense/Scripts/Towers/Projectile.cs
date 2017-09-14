@@ -10,15 +10,7 @@ namespace TowerDefense
         public float damage = 50f; // Damage dealt to whatever gets hit
         public float speed = 50f; // Speed the projectile travels
         public Vector3 direction; // Direction the projectile travels
-
-
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
+        
         // Update is called once per frame
         void Update()
         {

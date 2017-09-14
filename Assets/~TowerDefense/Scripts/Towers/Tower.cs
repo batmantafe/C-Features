@@ -30,7 +30,7 @@ namespace TowerDefense
             if (attackTimer >= attackRate)
             {
                 // CALL Attack()
-                // Attack();
+                Attack();
 
                 // SET attackTimer = 0
                 attackTimer = 0;
@@ -64,8 +64,12 @@ namespace TowerDefense
             }
         }
 
+        
         Enemy GetClosestEnemy()
         {
+            // SET enemies = RemoveAllNulls(enemies)
+            enemies = RemoveAllNulls(enemies);
+            
             // LET closest = null
             Enemy closest = null;
 
@@ -73,10 +77,15 @@ namespace TowerDefense
             float minDistance = float.MaxValue;
 
             // FOREACH enemy in enemies list
-            for (int i = 0; i <= enemies.Count; i++)
+            // for (int i = 0; i < enemies.Count; i++) <= use if FOR
+            foreach (Enemy currentEnemy in enemies)
             {
+                // Enemy currentEnemy = enemies[i]; <= use if FOR
+
+
                 // LET distance = the distance between transform's position and enemy's position
-                float distance = transform.position - closest.transform.position; // ?? float = Vector3 ??
+                // float distance = (transform.position - currentEnemy.transform.position).magnitude; // magnitude: length of Vector 
+                float distance = Vector3.Distance(transform.position, currentEnemy.transform.position); // does same thing as magnitude but easier
 
                 // IF distance < minDistance
                 if (distance < minDistance)
@@ -85,11 +94,30 @@ namespace TowerDefense
                     minDistance = distance;
 
                     // SET closest = enemy
-                    closest = enemies[i]; // this Iteration of the Enemy in the List!!!!
+                    // closest = enemies[i]; // this Iteration of the Enemy in the List!!!! <= use if FOR
+                    closest = currentEnemy;
                 }
             }
             // RETURN closest
             return closest;
+        }
+
+        List<Enemy> RemoveAllNulls(List<Enemy> listWithNulls)
+        {
+            // LET listWithoutNulls = new List
+            List<Enemy> listWithoutNulls = new List<Enemy>();
+
+            // >> ALGORITHM GOES HERE
+            foreach (Enemy e in listWithNulls)
+            {
+                if (e != null)
+                {
+                    listWithoutNulls.Add(e);
+                }
+            }
+
+            // RETURN new list "listWithoutNulls"
+            return listWithoutNulls;
         }
 
         void Attack()
@@ -104,7 +132,8 @@ namespace TowerDefense
                 cannon.Fire(closest);
             }
         }
-
+        
+        
     }
 }
 
