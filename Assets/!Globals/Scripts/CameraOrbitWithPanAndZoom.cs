@@ -31,7 +31,7 @@ public class CameraOrbitWithPanAndZoom : MonoBehaviour
     {
         // CALL target transform's SetParent(null)
         // ... Detaches the target from children
-        target.transform.SetParent(null);
+        // target.transform.SetParent(null); // <= this is for Tower Defence, commented out for Inheritance
 
         // SET distance = Vector3.Distance(target's position, transform's position)
         // ... Calculates distance to target
