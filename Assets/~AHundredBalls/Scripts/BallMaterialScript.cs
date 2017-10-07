@@ -34,7 +34,9 @@ namespace AHundredBalls
 
         void RandomTrail()
         {
+            int randomMatIndex = Random.Range(0, mats.Length);
             trail = gameObject.GetComponent<TrailRenderer>();
+            trail.material = mats[randomMatIndex];
 
             int randomNumber = Random.Range(0, 4); // min Incl, max Excl
 
@@ -48,5 +50,13 @@ namespace AHundredBalls
                 trail.enabled = false;
             }
         }
-    }
+
+        void OnCollisionEnter2D(Collision2D other)
+        {
+            if(other.gameObject.CompareTag("HundredBucket"))
+            {
+                trail.enabled = false;
+            }
+        }
+    }    
 }
