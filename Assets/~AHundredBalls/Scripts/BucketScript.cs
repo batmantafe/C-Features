@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BucketScript : MonoBehaviour
 {
@@ -9,11 +10,21 @@ public class BucketScript : MonoBehaviour
     private Rigidbody2D rigid2D;
     private Renderer[] renderers;
 
+    public Text countText;
+    private int count;
+
+    void Awake()
+    {
+        countText = Text.FindObjectOfType<Text>(); // To grab Text on Awake for counting balls
+    }
+
     // Use this for initialization
     void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
         renderers = GetComponentsInChildren<Renderer>(); // Get multiple components from children that are of type 'Renderer'
+
+        count = 0;
     }
 
     // Update is called once per frame
@@ -59,4 +70,17 @@ public class BucketScript : MonoBehaviour
         return false;
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("HundredBall"))
+        {
+            count = count + 1;
+            SetCountText();
+        }
+    }
+
+    void SetCountText()
+    {
+        countText.text = "Balls in Buckets: " + count.ToString();
+    }
 }
