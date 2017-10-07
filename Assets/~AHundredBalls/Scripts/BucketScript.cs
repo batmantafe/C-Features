@@ -24,11 +24,6 @@ namespace AHundredBalls
         public Renderer buck2mat;
         public Renderer buck3mat;
 
-        /*void Awake()
-        {
-            countText = Text.FindObjectOfType<Text>(); // To grab Text on Awake for counting balls
-        }*/
-
         // Use this for initialization
         void Start()
         {
@@ -88,18 +83,12 @@ namespace AHundredBalls
             if (other.gameObject.CompareTag("HundredBall"))
             {
                 count = 1;
-                //SetCountText();
 
                 ManageScoreScript.scoreCount = ManageScoreScript.scoreCount + count;
 
                 count = 0;
             }
         }
-
-        /*void SetCountText()
-        {
-            countText.text = "Balls in Buckets: " + count.ToString();
-        }*/
 
         void RandomMats()
         {

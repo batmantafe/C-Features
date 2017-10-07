@@ -11,12 +11,16 @@ namespace AHundredBalls
         public Renderer rend;
         public TrailRenderer trail;
 
+        private int count;
+
         // Use this for initialization
         void Start()
         {
             RandomMat();
 
             RandomTrail();
+
+            count = 0;
         }
 
         // Update is called once per frame
@@ -56,6 +60,20 @@ namespace AHundredBalls
             if(other.gameObject.CompareTag("HundredBucket"))
             {
                 trail.enabled = false;
+
+                ManageScoreScript.startPerc = true;
+                
+            }
+
+            if(other.gameObject.CompareTag("HundredDestroyer"))
+            {
+                Destroy(gameObject);
+
+                count = 1;
+
+                ManageScoreScript.missedCount = ManageScoreScript.missedCount + count;
+
+                count = 0;
             }
         }
     }    
