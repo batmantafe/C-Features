@@ -59,11 +59,24 @@ namespace AI
         void ApplyVelocity()
         {
             // SET velocity = velocity + force x deltaTime
+            velocity = velocity + force * Time.deltaTime;
+
             // IF velocity.magnitude > maxVelocity
+            if (velocity.magnitude > maxVelocity)
+            {
                 // SET velocity = velocity.normalized x maxVelocity
+                velocity = velocity.normalized * maxVelocity;
+            }
+
             // IF velocity.magnitude > 0
                 // SET transform.position = transform.position + velocity x deltaTime
                 // SET transform.rotation = Quaternion LookRotation (velocity)
+
+            if (velocity.magnitude > 0)
+            {
+                transform.position = transform.position + velocity * Time.deltaTime;
+                transform.rotation = Quaternion.LookRotation(velocity);
+            }
         }
 
         // Update is called once per frame
