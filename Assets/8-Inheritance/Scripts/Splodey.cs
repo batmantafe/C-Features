@@ -15,22 +15,37 @@ namespace Inheritance
 
         private float splosionTimer = 0f;
 
-
-
         public override void Attack()
         {
             // Start splosionTimer
+            splosionTimer++;
+
             // IF splosionTimer > splosionRate
-                // Call Explode()
+            if (splosionTimer > splosionRate)
+            {
+                // Call Explode(): Argument is where "center" is, in this example it's this GameObject
+                Explode(transform.position);
+            }
         }
 
-        void Explode()
+        void Explode(Vector3 center)
         {
             // Perform Physics OverlapSphere with splosionRadius
-                // Loop through all hits
-                    // IF Player
-                        // Add impactForce to Rigidbody
+            Collider[] hitColliders = Physics.OverlapSphere(center, splosionRadius);
+
+            // Loop through all hits: all individual hitCols in the hitColliders array
+            foreach (Collider hitCol in hitColliders)
+            {
+                // IF Player
+                if (hitCol.gameObject.name == "Player")
+                {
+                    // Add impactForce to Rigidbody
+                    hitCol.GetComponent<Rigidbody>().AddExplosionForce(impactForce, center, splosionRadius);
+                }
+            }
+
             // Destroy self
+            Destroy(gameObject);
         }
     }
 }

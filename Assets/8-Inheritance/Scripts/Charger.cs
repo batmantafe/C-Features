@@ -16,15 +16,18 @@ namespace Inheritance
         public override void Attack()
         {
             // Add force to self
-
+            Enemy.rigid.AddForce(-transform.forward * knockback);
         }
 
         void OnCollisionEnter(Collision col)
         {
             // IF collision hits player
-
+            if (col.gameObject.name == "Player")
+            {
                 // Add impactForce to player
-
+                col.rigidbody.AddForce(transform.forward * impactForce);
+                Debug.Log("Added impactForce to Player");
+            }
         }
     }
 }
