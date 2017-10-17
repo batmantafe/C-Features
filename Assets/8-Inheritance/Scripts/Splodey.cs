@@ -12,40 +12,57 @@ namespace Inheritance
         public float splosionRate = 3f;
         public float impactForce = 10f;
         public GameObject splosionParticles;
-
         private float splosionTimer = 0f;
 
-        public override void Attack()
+        protected override void Update()
         {
-            // Start splosionTimer
-            splosionTimer++;
+            base.Update();
 
+            splosionTimer += Time.deltaTime;
+        }
+
+        protected override void OnAttackEnd()
+        {
             // IF splosionTimer > splosionRate
             if (splosionTimer > splosionRate)
             {
                 // Call Explode(): Argument is where "center" is, in this example it's this GameObject
-                Explode(transform.position);
+                Splode();
+                Destroy(gameObject);
             }
         }
 
-        void Explode(Vector3 center)
+        void Splode()
         {
             // Perform Physics OverlapSphere with splosionRadius
-            Collider[] hitColliders = Physics.OverlapSphere(center, splosionRadius);
+            Collider[] hits = Physics.OverlapSphere(transform.position, splosionRadius);
 
             // Loop through all hits: all individual hitCols in the hitColliders array
-            foreach (Collider hitCol in hitColliders)
+            foreach (Collider hitCol in hits)
             {
-                // IF Player
+                Health h = hitCol.GetComponent<Health>();
+
+                if(h != null)
+                {
+                    h.TakeDamage(damage);
+                }
+
+                Rigidbody r = hitCol.GetComponent<Rigidbody>();
+
+                if(r != null)
+                {
+                    r.AddExplosionForce(impactForce, transform.position, splosionRadius);
+                }
+
+                /*// IF Player
                 if (hitCol.gameObject.name == "Player")
                 {
-                    // Add impactForce to Rigidbody
-                    hitCol.GetComponent<Rigidbody>().AddExplosionForce(impactForce, center, splosionRadius);
-                }
-            }
+                    h.TakeDamage(damage);
 
-            // Destroy self
-            Destroy(gameObject);
+                    // Add impactForce to Rigidbody
+                    rigid.AddExplosionForce(impactForce, transform.position, splosionRadius);
+                }*/
+            }
         }
     }
 }

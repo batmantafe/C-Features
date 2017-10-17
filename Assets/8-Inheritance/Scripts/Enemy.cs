@@ -13,48 +13,78 @@ namespace Inheritance
         public int damage = 20;
         public float attackRange = 2f;
         public float attackRate = .5f;
-
+        public float attackDuration = 1f;
         private float attackTimer = 0f;
-        private NavMeshAgent nav;
-        // private Rigidbody rigid;
-        public static Rigidbody rigid;
+        protected NavMeshAgent nav;
+        protected Rigidbody rigid;
+        // public static Rigidbody rigid;
         
-        void Awake()
+        protected virtual void Awake()
         {
             nav = GetComponent<NavMeshAgent>();
             rigid = GetComponent<Rigidbody>();
         }
 
-        void Update()
+        protected virtual void Attack() // Virtual is replaced by Override
         {
+
+        }
+
+        protected virtual void OnAttackEnd()
+        {
+
+        }
+
+        IEnumerator AttackDelay(float delay)
+        {
+            // Stop Navigation
+            nav.Stop();
+
+            yield return new WaitForSeconds(delay);
+
+            if (nav.isOnNavMesh)
+            {
+                // Resume Navigation
+                nav.Resume();
+            }
+
+            // CALL OnAttackEnd()
+            OnAttackEnd();
+        }
+
+        protected virtual void Update()
+        {
+            if(target == null)
+            {
+                return;
+            }
+            
             // Increase attackTimer
             attackTimer += Time.deltaTime;
 
-            // Get distance from Enemy to Target
-            float distance = Vector3.Distance(transform.position, target.position);
-
-            // IF distance < attackRange
-            if(distance < attackRange)
+            if (attackTimer >= attackRate)
             {
-                // Call Attack()
-                Attack();
 
-                // Reset attackTimer
-                attackTimer = 0f;
+                // Get distance from Enemy to Target
+                float distance = Vector3.Distance(transform.position, target.position);
+
+                // IF distance < attackRange
+                if (distance < attackRange)
+                {
+                    // Call Attack()
+                    Attack();
+
+                    // Reset attackTimer
+                    attackTimer = 0f;
+
+                    // StartCoroutine for attackDelay
+                    StartCoroutine(AttackDelay(attackDuration));
+                }
             }
 
-            // IF Target != null
-            if(target != null)
-            {
                 // Navigate to Target
                 nav.SetDestination(target.position);
-            }
-
         }
-
-        public virtual void Attack() // Virtual is replaced by Override
-        {
-            print("Attack() called");
-        }
+       
     }
 }
