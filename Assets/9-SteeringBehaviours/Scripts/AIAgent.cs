@@ -26,7 +26,7 @@ namespace AI
         void ComputeForces()
         {
             // SET force = Vector3.zero
-            Vector3 force = Vector3.zero;
+            force = Vector3.zero;
 
             // FOR i := 0 to behaviours.Count
             for (int i = 0; i < behaviours.Count; i++)
@@ -37,7 +37,7 @@ namespace AI
                 // IF behaviour.isActive == false
                 if (behaviour.isActiveAndEnabled == false)
                 {
-                    // continue
+                    // continue (skip over to next element)
                     continue;
                 }
 
@@ -61,7 +61,7 @@ namespace AI
             // SET velocity = velocity + force x deltaTime
             velocity = velocity + force * Time.deltaTime;
 
-            // IF velocity.magnitude > maxVelocity
+            // IF velocity.magnitude > maxVelocity (Cap the Velocity!)
             if (velocity.magnitude > maxVelocity)
             {
                 // SET velocity = velocity.normalized x maxVelocity

@@ -7,7 +7,7 @@ using GGL;
 namespace AI
 {
 
-    public class Seek : SteeringBehaviour // Seek inherits from SteeringBehaviour
+    public class Flee : SteeringBehaviour // Seek inherits from SteeringBehaviour
     {
         public Transform target;
         public float stoppingDistance = 1f;
@@ -25,7 +25,7 @@ namespace AI
             }
 
             // LET desiredForce = target position - transform position
-            Vector3 desiredForce = target.position - transform.position;
+            Vector3 desiredForce = transform.position - target.position;
 
             // IF desiredForce magnitude > stoppingDistance
             if (desiredForce.magnitude > stoppingDistance)
