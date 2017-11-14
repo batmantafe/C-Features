@@ -16,6 +16,8 @@ namespace PaperMarioClone
 
         private CharacterController controller;
 
+        private bool jumpInstant = false;
+
         public bool isGrounded
         {
             get { return controller.isGrounded; }
@@ -42,48 +44,47 @@ namespace PaperMarioClone
                 movement *= walkSpeed; // Walk!
 
             // Is the controller grounded?
-            if (isGrounded)
+            if (!isGrounded)
             {
                 // Cancel out gravity only if you're grounded
+                gravity += Physics.gravity * Time.deltaTime;
+            }
+
+            else
+            {
                 gravity = Vector3.zero;
 
-                // Is the controller jumping?
                 if (jump)
                 {
-                    // Make character jump
                     gravity.y = jumpHeight;
                     jump = false;
                 }
             }
 
-            else
+            if (jumpInstant)
             {
-                // Applying gravity
-                gravity += Physics.gravity * Time.deltaTime;
+                gravity.y = jumpHeight;
+                jumpInstant = false;
             }
 
-            // Apply movement
             movement += gravity;
             controller.Move(movement * Time.deltaTime);
         }
 
         // Controller Jump
-        public void Jump()
+        public void Jump(bool instant = false)
         {
             // Jump!
-            jump = true;
+            if (instant)
+                jumpInstant = true;
+            else
+                jump = true;
         }
 
         public void Move(float inputH, float inputV)
         {
-            if (moveInJump ||                           // is moveInJump enabled? OR
-                (moveInJump == false && isGrounded))    // is moveInJump disabled AND controller isGrounded?
-            {
-                inputDir = new Vector3(inputH, 0, inputV);
-            }
-
-            // Transform direction of movement based on input
-            movement = inputDir;
+            inputDir = new Vector3(inputH, 0, inputV);
+            movement = transform.TransformDirection(inputDir);
         }
     }
 }
