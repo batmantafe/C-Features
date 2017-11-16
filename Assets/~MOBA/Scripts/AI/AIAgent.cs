@@ -40,7 +40,7 @@ namespace MOBA
                 SteeringBehaviour b = behaviours[i];
 
                 // Check if behaviour is active and enabled
-                if(!b.isActiveAndEnabled == false)
+                if(!b.isActiveAndEnabled)
                 {
                     // Skip over to next behaviour
                     continue;
@@ -68,10 +68,10 @@ namespace MOBA
             velocity += force * Time.deltaTime;
 
             // Update nav's speed to velocity
-            nav.speed = velocity.magnitude;            
+            nav.speed = velocity.magnitude;
 
             // Is there a velocity?
-            if (velocity.magnitude > 0)
+            if (velocity.magnitude > 0 && nav.updatePosition)
             {
                 // Is the velocity over maxSpeed
                 if (velocity.magnitude > maxSpeed)
@@ -79,17 +79,17 @@ namespace MOBA
                     // Cap velocity to maxSpeed
                     velocity = velocity.normalized * maxSpeed;
                 }
-            }
 
-            // Predict the next position
-            Vector3 pos = transform.position + velocity;
+                // Predict the next position
+                Vector3 pos = transform.position + velocity;
 
-            // Perform NavMesh Sampling
-            NavMeshHit navHit;
-            if(NavMesh.SamplePosition(pos, out navHit, maxDistance, -1))
-            {
-                // Set nav destination to navhit position
-                nav.SetDestination(navHit.position);
+                // Perform NavMesh Sampling
+                NavMeshHit navHit;
+                if (NavMesh.SamplePosition(pos, out navHit, maxDistance, -1))
+                {
+                    // Set nav destination to navhit position
+                    nav.SetDestination(navHit.position);
+                }
             }
         }
 
